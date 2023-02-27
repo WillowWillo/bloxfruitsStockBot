@@ -88,8 +88,7 @@ async def clearBomb(ctx):
 
 
 async def daily():
-    # Type the channel ID of the channel that the daily messages are supposed to be send.
-    channel = bot.get_channel(1076174976308224031)
+    channel = bot.get_channel(0) # Type the channel ID of the channel that the daily messages are supposed to be send.
     data = datetime.date.today()
     listTime = [datetime.datetime.combine(data, datetime.time(7, 0)).replace(microsecond=0, second=0),
                 datetime.datetime.combine(data, datetime.time(11, 0)).replace(microsecond=0, second=0),
