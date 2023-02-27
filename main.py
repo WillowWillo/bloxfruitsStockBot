@@ -39,21 +39,24 @@ async def dm(ctx, arg):
 
 @bot.command()
 async def dmoff(ctx):
-    r = 0
-    for thisTask in asyncio.all_tasks():
-        if r == 1:
-            thisTask.cancel()
-        r += 1
+    for taskk in asyncio.all_tasks():
+        if str(taskk).find("wait_for=") == -1:
+            pass
+        else:
+            if str(taskk.get_name()) == "discord.py: on_message":
+                taskk.cancel()
 
 
 # Only for debug.
 
 '''
+
 @commands.has_permissions(administrator=True)
 @bot.command()
 async def task(d):
     for taskk in asyncio.all_tasks():
         print(taskk)
+
 '''
 
 
