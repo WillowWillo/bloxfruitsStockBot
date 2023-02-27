@@ -8,7 +8,7 @@ from bloxM import bloxM
 
 # discord.Intents(guild_messages=True, messages=True, message_content=True)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
-token = "your token here"
+token = "Your Token Here"
 c = '\n'.join(bloxM.currentStock())
 l = '\n'.join(bloxM.lastStock())
 p = '\n'.join(bloxM.pastStock())
@@ -19,36 +19,6 @@ async def stock(ctx):
     await ctx.send(f"**Current Stock:**\n\n{c}\n"
                    f"\n**Last Stock:**\n\n{l}\n"
                    f"\n**Past Stock:**\n\n{p}\n")
-
-
-@bot.command(name='test')
-async def dm(ctx, arg):
-    try:
-        if arg.isnumeric():
-            await ctx.send("Loop On.\n" + "-" * 30 + "\n")
-            while True:
-                channel = ctx.channel
-                await channel.send(
-                    f"**Current Stock:**\n\n{c}\n"
-                    f"\n**Last Stock:**\n\n{l}\n"
-                    f"\n**Past Stock:**\n\n{p}\n")
-                await channel.send("-" * 30)
-                await asyncio.sleep(int(arg))
-        else:
-            await ctx.send("Digite o Tempo em segundos como em '!dm 10', que atualizará a cada 10 seg.")
-    except Exception:
-        pass
-
-
-@bot.command()
-async def dmoff(ctx):
-    for taskk in asyncio.all_tasks():
-        if str(taskk).find("wait_for=") == -1:
-            pass
-        else:
-            if str(taskk.get_name()) == "discord.py: on_message":
-                taskk.cancel()
-    await ctx.message.channel.send("Loop Encerrado.")
 
 
 # Only for debug.
@@ -76,8 +46,10 @@ async def say(ctx, *, msg):
         await ctx.send(f"{msg}")
     except discord.ext.commands.errors.MissingPermissions:
         await ctx.channel.send("Sem permissão para executar o comando.")
-    except Exception:
-        pass
+    except Exception as E:
+        await ctx.channel.send("Algum Erro Ocorreu, comunique a moderação.")
+        print(ctx.guild)
+        print(E)
 
 
 # Random command for test.
@@ -93,8 +65,10 @@ async def clear(ctx, number):
             await ctx.send("Bota um numeral amigão")
     except discord.ext.commands.errors.MissingPermissions:
         await ctx.channel.send("Sem permissão para executar o comando.")
-    except Exception:
-        pass
+    except Exception as E:
+        await ctx.channel.send("Algum Erro Ocorreu, comunique a moderação.")
+        print(ctx.guild)
+        print(E)
 
 
 # Random command for test.
@@ -107,12 +81,15 @@ async def clearBomb(ctx):
             await ctx.channel.purge(limit=int(100))
     except discord.ext.commands.errors.MissingPermissions:
         await ctx.channel.send("Sem permissão para executar o comando.")
-    except Exception:
-        pass
+    except Exception as E:
+        await ctx.channel.send("Algum Erro Ocorreu, comunique a moderação.")
+        print(ctx.guild)
+        print(E)
 
 
 async def daily():
-    channel = bot.get_channel(0) # Type the channel ID of the channel that the daily messages are supposed to be send.
+    # Type the channel ID of the channel that the daily messages are supposed to be send.
+    channel = bot.get_channel(1076174976308224031)
     data = datetime.date.today()
     listTime = [datetime.datetime.combine(data, datetime.time(7, 0)).replace(microsecond=0, second=0),
                 datetime.datetime.combine(data, datetime.time(11, 0)).replace(microsecond=0, second=0),
